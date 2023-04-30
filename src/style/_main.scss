@@ -33,6 +33,18 @@ header {
   height: 300px;
 }
 
+.status-wrapper {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: var.$spacing-step;
+  padding: var.$spacing-step * 2 var.$spacing-step * 3;
+}
+
+.status-text {
+  font-weight: 700;
+}
+
 .button-wrapper {
   @extend .element-centering;
 
