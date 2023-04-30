@@ -1,3 +1,78 @@
+@use 'var';
+@use 'color';
+
+.element-centering {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 body {
-  background-color: tomato;
+  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito Sans', sans-serif;
+  background-color: color.$main-background;
+}
+
+header {
+  @extend .element-centering;
+
+  font-size: 48px;
+  font-weight: 800;
+  padding: var.$spacing-step 0;
+  text-decoration: underline;
+}
+
+.image-wrapper {
+  @extend .element-centering;
+
+  margin: var.$spacing-step * 2 0;
+}
+
+.image {
+  width: 300px;
+  height: 300px;
+}
+
+.button-wrapper {
+  @extend .element-centering;
+
+  gap: var.$spacing-step;
+  padding: 0 var.$spacing-step * 3;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: none;
+  font-size: 20px;
+  font-weight: 300;
+  width: 100%;
+  padding: var.$spacing-step;
+  border: none;
+  outline: none;
+  border-radius: var.$radius * 2;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: color.$white;
+  background-color: transparent;
+
+  &.primary {
+    background-color: color.$primary;
+  }
+
+  &.danger {
+    background-color: color.$danger;
+  }
+
+  &:hover,
+  &:focus-visible {
+    &.primary {
+      background-color: color.$primary-light;
+    }
+
+    &.danger {
+      background-color: color.$danger-light;
+    }
+  }
 }
