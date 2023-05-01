@@ -69,21 +69,21 @@ header {
   color: color.$white;
   background-color: transparent;
 
-  &.primary {
+  &.start {
     background-color: color.$primary;
   }
 
-  &.danger {
+  &.stop {
     background-color: color.$danger;
   }
 
   &:hover,
   &:focus-visible {
-    &.primary {
+    &.start {
       background-color: color.$primary-light;
     }
 
-    &.danger {
+    &.stop {
       background-color: color.$danger-light;
     }
   }
