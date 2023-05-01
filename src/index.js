@@ -9,9 +9,11 @@ import {
   merge,
   mergeMap,
   of,
+  startWith,
   switchMap,
   takeUntil,
   tap,
+  throttleTime,
 } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 
@@ -29,22 +31,31 @@ const statusEl = document.querySelector('.status-text');
 const setImageSrc = src => (imgEl.src = src);
 const setStatusText = text => (statusEl.innerText = text);
 
-const imageUrl$ = ajax.getJSON(URL).pipe(
+const getImg$ = ajax.getJSON(URL).pipe(
   map(({ url }) => url),
-  filter(url => /.*\.(gif|jpe?g|bmp|png)$/gim.test(url)),
-  tap(setImageSrc)
+  filter(url => /.*\.(gif|jpe?g|bmp|png)$/gim.test(url))
 );
 
 const stop$ = fromEvent(stopEl, 'click').pipe(
-  tap(() => setStatusText(STOPPED))
+  throttleTime(INTERVAL),
+  tap(() => {
+    startEl.disabled = false;
+    setStatusText(STOPPED);
+  })
 );
 
 const start$ = fromEvent(startEl, 'click').pipe(
-  tap(() => setStatusText(ACTIVE)),
+  tap(() => {
+    startEl.disabled = true;
+    setStatusText(ACTIVE);
+  }),
+  throttleTime(INTERVAL),
   mergeMap(() =>
     interval(INTERVAL).pipe(
+      startWith(null),
       switchMap(() =>
-        imageUrl$.pipe(
+        getImg$.pipe(
+          tap(setImageSrc),
           catchError(({ message, status }) => {
             console.log('error: ', { message, status });
             return of('');

@@ -69,6 +69,12 @@ header {
   color: color.$white;
   background-color: transparent;
 
+  &:disabled {
+    cursor: not-allowed;
+    transition: none;
+    opacity: 0.5;
+  }
+
   &.start {
     background-color: color.$primary;
   }
